@@ -34,7 +34,7 @@ async def gen_thumb(thumbnail, title, userid, theme, ctitle):
     font = ImageFont.truetype("cache/finalfont.ttf", 60)
     font2 = ImageFont.truetype("cache/finalfont.ttf", 70)     
     draw.text((20, 45), f"{title[:30]}...", fill= "white", stroke_width = 1, stroke_fill="white", font=font2)
-    draw.text((120, 595), f"Playing on: {ctitle[:20]}...", fill="white", stroke_width = 1, stroke_fill="white" ,font=font)
+    draw.text((120, 595), f"Tocando em: {ctitle[:20]}...", fill="white", stroke_width = 1, stroke_fill="white" ,font=font)
     img.save(f"search/final{userid}.png")
     os.remove(f"search/temp{userid}.png")
     os.remove(f"search/thumb{userid}.png") 
