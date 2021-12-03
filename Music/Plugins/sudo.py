@@ -13,7 +13,7 @@ from pyrogram.types import Message
 async def useradd(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
-            await message.reply_text("❌ Reply to a user's message or give username/user_id.")
+            await message.reply_text("❌ Responda à mensagem de um usuário ou dê nome de usuário/user_id.")
             return
         user = message.text.split(None, 1)[1]
         if "@" in user:
@@ -22,24 +22,24 @@ async def useradd(_, message: Message):
         from_user = message.from_user 
         sudoers = await get_sudoers()
         if user.id in sudoers:
-            return await message.reply_text("✅ Aleady a Sudo User.")
+            return await message.reply_text("✅ Adicionado como Sudo User.")
         added = await add_sudo(user.id)
         if added:
-            await message.reply_text(f"✅ Added **{user.mention}** as a Super User for Yukki OwO")
+            await message.reply_text(f"✅ Adicionado **{user.mention}** como um Super Usuário para o Baianor")
             return os.execvp("python3", ["python3", "-m", "Music"])
-        await edit_or_reply(message, text="❌ Something wrong happened, check logs.")  
+        await edit_or_reply(message, text="❌ Algo errado aconteceu, verifique os registros.")  
         return
     from_user_id = message.from_user.id
     user_id = message.reply_to_message.from_user.id
     mention = message.reply_to_message.from_user.mention
     sudoers = await get_sudoers()
     if user_id in sudoers:
-        return await message.reply_text("✅ Already a Sudo User.")
+        return await message.reply_text("✅ Já é usuário do Sudo.")
     added = await add_sudo(user_id)
     if added:
-        await message.reply_text(f"✅ Added **{mention}** as a Super User for Yukki OwO")
+        await message.reply_text(f"✅ Adicionado **{mention}** como um Super Usuário para Baianor")
         return os.execvp("python3", ["python3", "-m", "Music"])
-    await edit_or_reply(message, text="❌ Something wrong happened, check logs.")  
+    await edit_or_reply(message, text="❌ Algo errado aconteceu, verifique os registros.")  
     return    
           
               
@@ -47,7 +47,7 @@ async def useradd(_, message: Message):
 async def userdel(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
-            await message.reply_text("❌ Reply to a user's message or give username/user_id.")
+            await message.reply_text("❌ Responda à mensagem de um usuário ou dê nome de usuário/user_id.")
             return
         user = message.text.split(None, 1)[1]
         if "@" in user:
@@ -55,29 +55,29 @@ async def userdel(_, message: Message):
         user = (await app.get_users(user))
         from_user = message.from_user      
         if user.id not in await get_sudoers():
-            return await message.reply_text(f"❌ Not a part of Yukki's Sudo.")        
+            return await message.reply_text(f"❌ Não faz parte do Sudo do Baianor..")        
         removed = await remove_sudo(user.id)
         if removed:
-            await message.reply_text(f"✅ Removed **{user.mention}** from Yukki's Sudo.")
+            await message.reply_text(f"✅ Removido **{user.mention}** Para Sudo Baianor.")
             return os.execvp("python3", ["python3", "-m", "Music"])
-        await message.reply_text(f"❌ Something wrong happened.")
+        await message.reply_text(f"❌ Algo errado aconteceu..")
         return
     from_user_id = message.from_user.id
     user_id = message.reply_to_message.from_user.id
     mention = message.reply_to_message.from_user.mention
     if user_id not in await get_sudoers():
-        return await message.reply_text(f"❌ Not a part of Yukki's Sudo.")        
+        return await message.reply_text(f"❌ Não faz parte do Sudo de Panda..")        
     removed = await remove_sudo(user_id)
     if removed:
-        await message.reply_text(f"✅ Removed **{mention}** from Yukki's Sudo.")
+        await message.reply_text(f"✅ Removido **{mention}** para Pan Sudo.")
         return os.execvp("python3", ["python3", "-m", "Music"])
-    await message.reply_text(f"❌ Something wrong happened.")
+    await message.reply_text(f"❌ Algo errado aconteceu..")
                 
                           
 @app.on_message(filters.command("sudolist"))
 async def sudoers_list(_, message: Message):
     sudoers = await get_sudoers()
-    text = "**__Sudo Users List of Yui Music:-__**\n\n"
+    text = "**__Lista de Usuários sudo do Baianor:-__**\n\n"
     for count, user_id in enumerate(sudoers, 1):
         try:                     
             user = await app.get_users(user_id)
@@ -86,6 +86,6 @@ async def sudoers_list(_, message: Message):
             continue                     
         text += f"➤ {user}\n"
     if not text:
-        await message.reply_text("❌ No Sudo Users")  
+        await message.reply_text("❌ Sem usuários sudo")  
     else:
         await message.reply_text(text) 
