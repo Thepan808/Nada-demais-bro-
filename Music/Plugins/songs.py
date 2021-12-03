@@ -122,7 +122,7 @@ def song(client, message):
     for i in message.command[1:]:
         query += ' ' + str(i)
     print(query)
-    m = message.reply('**Please Wait! Im Searching For Your Song 🔎...**')
+    m = message.reply('**Aguarde! Estou procurando sua música 🔎...**')
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -141,17 +141,17 @@ def song(client, message):
 
     except Exception as e:
         m.edit(
-            "Sorry To Say but I can't find anything ❌!\n\nTry Another Keyword! Btw you spelled it properly 🤔?"
+            "Desculpe dizer, mas não consigo encontrar nada. ❌!\n\nErro! Outra palavra-chave! Você soletrou corretamente 🤔?"
         )
         print(str(e))
         return
-    m.edit("**Downloading Your Song! Please Wait ⏰**")
+    m.edit("**Baixando sua música! Aguarde ⏰**")
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f'🎙 **Title**: [{title[:35]}]({link})\n🎬 **Source**: `YouTube`\n⏱️ **Song Duration**: `{duration}`\n👁‍🗨 **Song Views**: `{views}`\n\n**Uploaded By**: **@{BOT_USERNAME}** \n **Join @{UPDATES_CHANNEL} 😉** '
+        rep = f'🎙 **Título**: [{title[:35]}]({link})\n♦️ **Baixado pelo server do**: `YouTube`\n⏱️ **Duração da Música**: `{duration}`\n👁‍🗨 **Visualizações da música**: `{views}`\n\n**Carregado pelo**: **@{BOT_USERNAME}** \n **Entre @{UPDATES_CHANNEL} 😴👍♦️** '
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         for i in range(len(dur_arr)-1, -1, -1):
             dur += (int(dur_arr[i]) * secmul)
@@ -188,17 +188,17 @@ async def ytmusic(client, message: Message):
     global is_downloading
     if is_downloading:
         await message.reply_text(
-            "Sorry! **Another download is in progress !** Try Again After Sometime!"
+            "Foi mal Ademir! **Outro download está em andamento!** Tente novamente depois que baixar o qual já está!"
         )
         return
 
     urlissed = get_text(message)
 
     pablo = await client.send_message(
-        message.chat.id, f"`Getting {urlissed} From Youtube Servers. Please Wait For Moment!`"
+        message.chat.id, f"`Zzz carregando {urlissed} Para Youtube Servers. Por favor, espere por um momento!`"
     )
     if not urlissed:
-        await pablo.edit("Invalid Command Syntax")
+        await pablo.edit("Comando Inválido Syntax")
         return
 
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
@@ -232,21 +232,21 @@ async def ytmusic(client, message: Message):
 
             if duration > 999:
                 await pablo.edit(
-                    f"❌ Videos longer than 999 minute(s) aren't allowed, the provided video is {duration} minute(s)"
+                    f"❌ Vídeos com mais de 999 minutos não são permitidos, o vídeo fornecido é {duration} minuto(s)"
                 )
                 is_downloading = False
                 return
             ytdl_data = ytdl.extract_info(url, download=True)
 
     except Exception:
-        # await pablo.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
+        # await pablo.edit(event, f"**Falha ao baixar** \n**Error :** `{str(e)}`")
         is_downloading = False
         return
 
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
-    YTVID_BUTTONS = InlineKeyboardMarkup([[InlineKeyboardButton("📺 Watch On YouTube 📺", url=f"{mo}")]])
-    capy = f"**🎧️ Music Video Name:** `{thum}` \n\n**👨‍💻️ Your Keyword:** `{urlissed}` \n**😉️ YouTube Channel:** `{thums}` \n**🔗️ Video Link :** `{mo}`"
+    YTVID_BUTTONS = InlineKeyboardMarkup([[InlineKeyboardButton("📺 Para Assistir No YouTube 📺", url=f"{mo}")]])
+    capy = f"**♦️ Nome do vídeo:** `{thum}` \n\n**👨‍💻️ Sua palavra-chave:** `{urlissed}` \n**😉️ Canal do Youtube:** `{thums}` \n**🔗️ Video Link :** `{mo}`"
     await client.send_video(
         message.chat.id,
         video=open(file_stark, "rb"),
@@ -260,7 +260,7 @@ async def ytmusic(client, message: Message):
         progress_args=(
             pablo,
             c_time,
-            f"`Please Wait! I'm Uploading` **{urlissed}** `From YouTube!`",
+            f"`Aguarde! Estou carregando` **{urlissed}** `do YouTube!`",
             file_stark,
         ),
     )
