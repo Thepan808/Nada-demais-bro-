@@ -175,7 +175,7 @@ async def skipvc(_,CallbackQuery):
             await music.pytgcalls.leave_group_call(chat_id)
             return
         else:
-            await CallbackQuery.answer("Música foi pulada lara próxima", show_alert=True)
+            await CallbackQuery.answer("Música foi pulada para próxima faixa", show_alert=True)
             afk = get(chat_id)['file']
             f1 = (afk[0])
             f2 = (afk[1])
