@@ -60,12 +60,12 @@ async def stop_cmd(_, message):
         await music.pytgcalls.leave_group_call(chat_id)
     except:
         pass   
-    await message.reply_text("Erased Databae, Queues, Logs, Raw Files, Downloads.")
+    await message.reply_text("Database apagado, filas, registros, arquivos inúteis, e downloads.")
     
 @app.on_message(filters.command("pause"))
 async def pause_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("Você é um: __Anonymous Admin__!\nReverta para sua conta normalmente sem essa bosta de de Admin Anônimo beleza :).") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -73,17 +73,17 @@ async def pause_cmd(_, message):
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
-        return await message.reply_text("I dont think if something's playing on voice chat")
+        return await message.reply_text("Eu não acho que tenha algo, que está tocando no bate-papo de voz")
     elif not await is_music_playing(message.chat.id):
-        return await message.reply_text("I dont think if something's playing on voice chat")   
+        return await message.reply_text("Eu não acho que tenha-se algo, que está tocando no bate-papo de voz")   
     await music_off(chat_id)
     await music.pytgcalls.pause_stream(chat_id)
-    await message.reply_text(f"🎧 Voicechat Paused by {checking}!")
+    await message.reply_text(f"♦️✔️ Transmissão pausada pelo {checking}!")
     
 @app.on_message(filters.command("resume"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("Ei fiato, tá usando a permissão de __Admin Anônimo__!\nReverta essa sua merda de conta pra usar o bot.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -91,18 +91,18 @@ async def stop_cmd(_, message):
     checking = message.from_user.mention
     chat_id = message.chat.id
     if not await is_active_chat(chat_id):
-        return await message.reply_text("I dont think if something's playing on voice chat")
+        return await message.reply_text("Eu não acho que tem algo, que está tocando no bate-papo de voz")
     elif await is_music_playing(chat_id):
-        return await message.reply_text("I dont think if something's playing on voice chat") 
+        return await message.reply_text("Eu não acho que, algo está tocando no bate-papo de voz") 
     else:
         await music_on(chat_id)
         await music.pytgcalls.resume_stream(chat_id)
-        await message.reply_text(f"🎧 Voicechat Resumed by {checking}!")
+        await message.reply_text(f"♦️🧐 Transmissão sendo resumida novamente pelo {checking}!")
 
 @app.on_message(filters.command(["stop", "end"]))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("Ei fdp, tá usando a opção __Anonymous Admin__!\nReverta sua conta fi.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -116,14 +116,14 @@ async def stop_cmd(_, message):
             pass                        
         await remove_active_chat(chat_id)
         await music.pytgcalls.leave_group_call(chat_id)
-        await message.reply_text(f"🎧 Voicechat End/Stopped by {checking}!") 
+        await message.reply_text(f"😒 Transmissão encerrada pelo {checking}!") 
     else:
-        return await message.reply_text("I dont think if something's playing on voice chat")
+        return await message.reply_text("Eu não acho que tenha algo, que está tocando no bate-papo de voz")
     
 @app.on_message(filters.command("skip"))
 async def stop_cmd(_, message): 
     if message.sender_chat:
-        return await message.reply_text("You're an __Anonymous Admin__!\nRevert back to User Account.") 
+        return await message.reply_text("Você tá com admin com essa permissão __Anonymous Admin__!\nReverta tua conta.") 
     permission = "can_manage_voice_chats"
     m = await adminsOnly(permission, message)
     if m == 1:
@@ -132,12 +132,12 @@ async def stop_cmd(_, message):
     chat_id = message.chat.id
     chat_title = message.chat.title
     if not await is_active_chat(chat_id):
-        await message.reply_text("Nothing's playing on Music")
+        await message.reply_text("Nada está tocando na call")
     else:
         task_done(chat_id)
         if is_empty(chat_id):
             await remove_active_chat(chat_id)
-            await message.reply_text("No more music in __Queue__ \n\nLeaving Voice Chat")
+            await message.reply_text("Não há mais música em __Fila__ \n\nSaindo da call")
             await music.pytgcalls.leave_group_call(chat_id)
             return  
         else:
@@ -147,13 +147,13 @@ async def stop_cmd(_, message):
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await message.reply_text("Music is currently playing Playlist...\n\nDownloading Next Music From Playlist....")
+                mystic = await message.reply_text("Música está atualmente tocando na Playlist...\n\nBaixando a próxima música da lista de reprodução....")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"Failed to download this video.\n\n**Reason**:{e}") 
+                    return await mystic.edit(f"Falha ao baixar este vídeo.\n\n**Razão por isso**:{e}") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -172,25 +172,25 @@ async def stop_cmd(_, message):
                         if flex[str(bytesx)] == 1:
                             flex[str(bytesx)] += 1
                             sedtime.sleep(1)
-                            mystic.edit(f"Downloading {title[:50]}\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
+                            mystic.edit(f"Baixando {title[:50]}\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Rapidamente em:** {speed}\n**ETA:** {eta} sec")
                         if per > 500:    
                             if flex[str(bytesx)] == 2:
                                 flex[str(bytesx)] += 1
                                 sedtime.sleep(0.5)
-                                mystic.edit(f"Downloading {title[:50]}...\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                                mystic.edit(f"Baixando {title[:50]}...\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Rapidamente em:** {speed}\n**ETA:** {eta} sec")
+                                print(f"[{videoid}] Baixando {percentage} a uma velocidade de {speed} em {chat_title} | ETA: {eta} seconds")
                         if per > 800:    
                             if flex[str(bytesx)] == 3:
                                 flex[str(bytesx)] += 1
                                 sedtime.sleep(0.5)
-                                mystic.edit(f"Downloading {title[:50]}....\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                                mystic.edit(f"Baixando {title[:50]}....\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Rapidamente em:** {speed}\n**ETA:** {eta} sec")
+                                print(f"[{videoid}] Baixando {percentage} a uma velocidade de {speed} em {chat_title} | ETA: {eta} seconds")
                         if per == 1000:    
                             if flex[str(bytesx)] == 4:
                                 flex[str(bytesx)] = 1
                                 sedtime.sleep(0.5)
-                                mystic.edit(f"Downloading {title[:50]}.....\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec") 
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                                mystic.edit(f"Baixando {title[:50]}.....\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Velocidade de:** {speed}\n**ETA:** {eta} sec") 
+                                print(f"[{videoid}] Baixando {percentage} a uma velocidade de {speed} em {chat_title} | ETA: {eta} seconds")
                 loop = asyncio.get_event_loop()
                 xxx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xxx)
@@ -218,7 +218,7 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>__Skipped Voice Chat__</b>\n\n🎥 <b>__Started Playing:__ </b>[{title[:25]}]({url}) \n⏳ <b>__Duration:__</b> {duration} Mins\n👤 **__Requested by:__** {semx.mention}")
+                caption=(f"<b>__Pulou a faixa__</b>\n\n♦️ <b>__Transmissão iniciada, tocando:__ </b>[{title[:25]}]({url}) \n♦️ <b>__Duração:__</b> {duration} Mins\n🧐 **__Pedido pelo:__** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -248,6 +248,6 @@ async def stop_cmd(_, message):
                 await message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>__Skipped Voice Chat__</b>\n\n🎥 <b>__Started Playing:__</b> {title} \n⏳ <b>__Duration:__</b> {duration} \n👤 <b>__Requested by:__ </b> {username}",
+                caption=f"<b>__Próxima faixa__</b>\n\n♦️ <b>__Transmissão iniciada, tocando:__</b> {title} \n♦️ <b>__Duração:__</b> {duration} \n🧐 <b>__Pedido pelo:__ </b> {username}",
                 )
                 return
