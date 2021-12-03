@@ -195,7 +195,7 @@ async def ytmusic(client, message: Message):
     urlissed = get_text(message)
 
     pablo = await client.send_message(
-        message.chat.id, f"`Zzz carregando {urlissed} Para Youtube Servers. Por favor, espere por um momento!`"
+        message.chat.id, f"`Calma ademir! Estou baixando {urlissed} em Youtube e seus servidores. Por favor, espere por um momento!`"
     )
     if not urlissed:
         await pablo.edit("Comando Inválido Syntax")
