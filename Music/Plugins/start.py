@@ -32,7 +32,7 @@ async def _human_time_duration(seconds):
 
 
 
-@Client.on_message(command(["repo", "source"]) & filters.group & ~filters.edited)
+@Client.on_message(command(["nadadissu", "sainnn"]) & filters.group & ~filters.edited)
 async def help(client: Client, message: Message):
     await message.reply_photo(
         photo=f"https://telegra.ph/file/92688f2c44a35ba673c23.png",
