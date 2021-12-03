@@ -350,7 +350,7 @@ async def boom(_,CallbackQuery):
 👀 **Visualizações:** __{x["view_count"]}__
 🎥 **Nome do canal:** {x["uploader"]}
 
-__Youtube Inline Baixando pelo Baianor__ """    
+__Youtube Inline Baixado pelo Baianor__ """    
     link = (x["webpage_url"])
     channel = (x["channel_url"])
     perf = (x['uploader'])
