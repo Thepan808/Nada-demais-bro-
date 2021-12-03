@@ -18,7 +18,7 @@ from Music.config import MONGO_DB_URI as smex
 
 @app.on_message(filters.command("stats") & ~filters.edited)
 async def gstats(_, message):
-    m = await message.reply_text("**Carregand o Status...**\n\nPor favor, espere algum tempo....")
+    m = await message.reply_text("**Carregando o Status...**\n\nPor favor, espere algum tempo....")
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
