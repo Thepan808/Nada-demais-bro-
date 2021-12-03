@@ -97,10 +97,10 @@ async def closesmex(_,CallbackQuery):
     try:
         smex, user_id = callback_request.split("|") 
     except Exception as e:
-        await CallbackQuery.message.edit(f"❌ Error Occured\n**Possible reason could be**:{e}")
+        await CallbackQuery.message.edit(f"❌ Ocorreu um erro\n**A possível razão pode ser**:{e}")
         return 
     if CallbackQuery.from_user.id != int(user_id):
-        await CallbackQuery.answer("❌ You're not allowed to close this", show_alert=True)
+        await CallbackQuery.answer("❌ Você não tem permissão para fechar isso.", show_alert=True)
         return
     await CallbackQuery.message.delete()
     await CallbackQuery.answer()
@@ -110,55 +110,55 @@ async def closesmex(_,CallbackQuery):
 async def pausevc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("❌ You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("❌ Você não tem a permissão necessária para executar esta ação.\nPermissão: MANAGE VOICE CHATS | GERENCIAR A CHAMADA DE VOZ", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(chat_id):
             await music.pytgcalls.pause_stream(chat_id)
             await music_off(chat_id)
-            await CallbackQuery.answer("Voicechat Paused", show_alert=True)
+            await CallbackQuery.answer("Transmissão foi Pausada", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-            await CallbackQuery.message.reply(f"🎧 Voicechat Paused by {rpk}!", reply_markup=play_keyboard)
+            await CallbackQuery.message.reply(f"🧐♦️ Música foi pausada pelo {rpk}!", reply_markup=play_keyboard)
             await CallbackQuery.message.delete()
         else:
-            await CallbackQuery.answer(f"❌ Nothing's playing on Music!", show_alert=True)
+            await CallbackQuery.answer(f"❌ Nada está tocando na call porra!", show_alert=True)
             return
     else:
-        await CallbackQuery.answer(f"❌ Nothing's playing on Music!", show_alert=True)
+        await CallbackQuery.answer(f"❌ Nada está tocando na call!", show_alert=True)
    
     
 @Client.on_callback_query(filters.regex("resumevc"))
 async def resumevc(_,CallbackQuery):  
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("❌ You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("❌ Você não tem a permissão necessária para executar esta ação.\nPermissão: MANAGE VOICE CHATS | GERENCIAR O CHAT DE VOZ", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
         if await is_music_playing(chat_id):
-            await CallbackQuery.answer("❌ I dont think if something's paused on voice chat", show_alert=True)
+            await CallbackQuery.answer("❌ Eu não acho que, se algo esteja pausado no bate-papo de voz", show_alert=True)
             return    
         else:
             await music_on(chat_id)
             await music.pytgcalls.resume_stream(chat_id)
-            await CallbackQuery.answer("Voicechat Resumed", show_alert=True)
+            await CallbackQuery.answer("Música resumida", show_alert=True)
             user_id = CallbackQuery.from_user.id
             user_name = CallbackQuery.from_user.first_name
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-            await CallbackQuery.message.reply(f"🎧 Voicechat Resumed by {rpk}!", reply_markup=play_keyboard)
+            await CallbackQuery.message.reply(f"😎👍 Música foi resumida pelo {rpk}!", reply_markup=play_keyboard)
             await CallbackQuery.message.delete()
     else:
-        await CallbackQuery.answer(f"❌ Nothing's playing on Music!", show_alert=True)
+        await CallbackQuery.answer(f"❌ Nada está tocando na música!", show_alert=True)
    
     
 @Client.on_callback_query(filters.regex("skipvc"))
 async def skipvc(_,CallbackQuery): 
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("❌ You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("❌ Você não tem a permissão necessária para executar esta ação.\nPermissão: MANAGE VOICE CHATS", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
@@ -171,24 +171,24 @@ async def skipvc(_,CallbackQuery):
             rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
             await remove_active_chat(chat_id)
             await CallbackQuery.answer()
-            await CallbackQuery.message.reply(f"**__Skip Button Used By__** {rpk}\n\nNo more music in __Queues__ \n\nLeaving Voice Chat")
+            await CallbackQuery.message.reply(f"**__O Botão de pular a faixa foi usado pelo__** {rpk}\n\nNão há mais música em __Fila__ \n\nSaindo do Chat de voz meo parceiro")
             await music.pytgcalls.leave_group_call(chat_id)
             return
         else:
-            await CallbackQuery.answer("Voicechat Skipped", show_alert=True)
+            await CallbackQuery.answer("Música foi pulada lara próxima", show_alert=True)
             afk = get(chat_id)['file']
             f1 = (afk[0])
             f2 = (afk[1])
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":   
-                mystic = await CallbackQuery.message.reply("Music is currently playing Playlist...\n\nDownloading Next Music From Playlist....")
+                mystic = await CallbackQuery.message.reply("Música está atualmente tocando Playlist...\n\nBaixando a próxima música da lista de reprodução....")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 try:
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"❌ Failed to download this video.\n\n**Reason**:{e}") 
+                    return await mystic.edit(f"❌ Falha ao baixar este vídeo.\n\n**Razão**:{e}") 
                 title = (x["title"])
                 videoid = afk
                 def my_hook(d):
@@ -207,25 +207,25 @@ async def skipvc(_,CallbackQuery):
                         if flex[str(bytesx)] == 1:
                             flex[str(bytesx)] += 1
                             sedtime.sleep(1)
-                            mystic.edit(f"Downloading {title[:50]}\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
+                            mystic.edit(f"Baixando {title[:50]}\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Velocidade:** {speed}\n**ETA:** {eta} sec")
                         if per > 500:    
                             if flex[str(bytesx)] == 2:
                                 flex[str(bytesx)] += 1
                                 sedtime.sleep(0.5)
-                                mystic.edit(f"Downloading {title[:50]}...\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                                mystic.edit(f"Baixando {title[:50]}...\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Velocidade:** {speed}\n**ETA:** {eta} sec")
+                                print(f"[{videoid}] Baixando {percentage} a uma velocidade de {speed} em {chat_title} | ETA: {eta} seconds")
                         if per > 800:    
                             if flex[str(bytesx)] == 3:
                                 flex[str(bytesx)] += 1
                                 sedtime.sleep(0.5)
-                                mystic.edit(f"Downloading {title[:50]}....\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec")
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                                mystic.edit(f"Baixando {title[:50]}....\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Velocidade:** {speed}\n**ETA:** {eta} sec")
+                                print(f"[{videoid}] Baixando {percentage} a uma velocidade de {speed} em {chat_title} | ETA: {eta} seconds")
                         if per == 1000:    
                             if flex[str(bytesx)] == 4:
                                 flex[str(bytesx)] = 1
                                 sedtime.sleep(0.5)
-                                mystic.edit(f"Downloading {title[:50]}.....\n\n**File Size:** {size}\n**Downloaded:** {percentage}\n**Speed:** {speed}\n**ETA:** {eta} sec") 
-                                print(f"[{videoid}] Downloaded {percentage} at a speed of {speed} in {chat_title} | ETA: {eta} seconds")
+                                mystic.edit(f"Baixando {title[:50]}.....\n\n**Arquivo Size:** {size}\n**Baixando:** {percentage}\n**Velocidade:** {speed}\n**ETA:** {eta} sec") 
+                                print(f"[{videoid}] Baixando {percentage} a uma velocidade de {speed} em {chat_title} | ETA: {eta} seconds")
                 loop = asyncio.get_event_loop()
                 xx = await loop.run_in_executor(None, download, url, my_hook)
                 file = await convert(xx)
@@ -256,7 +256,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo= thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"<b>__Skipped Voice Chat By {rpk}__</b>\n\n🎥 <b>__Started Playing:__ </b>[{title[:25]}]({url}) \n⏳ <b>__Duration:__</b> {duration} Mins\n👤**__Requested by:__** {semx.mention}")
+                caption=(f"<b>__Música pulada por {rpk}__</b>\n\n♦️ <b>__Transmissão iniciada, Tocando:__ </b>[{title[:25]}]({url}) \n♦️ <b>__Duração:__</b> {duration} Mins\n👤**__Pedido pelo:__** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      
@@ -289,7 +289,7 @@ async def skipvc(_,CallbackQuery):
                 await CallbackQuery.message.reply_photo(
                 photo=f"downloads/{_chat_}final.png",
                 reply_markup=InlineKeyboardMarkup(buttons),
-                caption=f"<b>__Skipped Voice Chat By {rpk}__</b>\n\n🎥 <b>__Started Playing:__</b> {title} \n⏳ <b>__Duration:__</b> {duration} \n👤 <b>__Requested by:__ </b> {username}",
+                caption=f"<b>__Pulada por {rpk}__</b>\n\n♦️ <b>__Transmissão iniciada, tocando:__</b> {title} \n♦️ <b>__Duração:__</b> {duration} \n👤 <b>__Pedido pelo:__ </b> {username}",
                 )
                 return
             
@@ -299,7 +299,7 @@ async def skipvc(_,CallbackQuery):
 async def stopvc(_,CallbackQuery):
     a = await app.get_chat_member(CallbackQuery.message.chat.id , CallbackQuery.from_user.id)
     if not a.can_manage_voice_chats:
-        return await CallbackQuery.answer("❌ You don't have the required permission to perform this action.\nPermission: MANAGE VOICE CHATS", show_alert=True)
+        return await CallbackQuery.answer("❌ Você não tem a permissão necessária para executar esta ação.\nPermissão: MANAGE VOICE CHATS", show_alert=True)
     checking = CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     if await is_active_chat(chat_id):
@@ -312,13 +312,13 @@ async def stopvc(_,CallbackQuery):
         except Exception as e:
             pass
         await remove_active_chat(chat_id) 
-        await CallbackQuery.answer("Voicechat Stopped", show_alert=True)
+        await CallbackQuery.answer("A música foi parada", show_alert=True)
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
         rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
-        await CallbackQuery.message.reply(f"🎧 Voicechat End/Stopped by {rpk}!")
+        await CallbackQuery.message.reply(f"♦️😴 Música foi encerrada pelo {rpk}!")
     else:
-        await CallbackQuery.answer(f"❌ Nothing's playing on Music!", show_alert=True)
+        await CallbackQuery.answer(f"❌ Nada está tocando na call!", show_alert=True)
 
         
 @Client.on_callback_query(filters.regex("play_playlist"))
