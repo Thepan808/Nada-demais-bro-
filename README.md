@@ -21,7 +21,7 @@
 
 [@genStr_Bot](https://t.me/genStr_Bot)
 
-[![ɢᴇɴᴇʀᴀᴛᴇ ꜱᴇꜱꜱɪᴏɴ](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](https://replit.com/@BoooCreative/StringSession-1#main.py)
+[![ɢᴇɴᴇʀᴀᴛᴇ ꜱᴇꜱꜱɪᴏɴ](https://img.shields.io/badge/repl.it-generateString-yellowgreen)](https://replit.com/@BoooCreative/Session-Generater#main.py)
 ###   
 <a href="https://youtu.be/nQAyresJTC0"><img src="https://img.shields.io/badge/How%20To-Deploy-red.svg?logo=Youtube"></a>
 
